@@ -111,7 +111,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="date.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="contract.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="contract.h" />
+    <ClInclude Include="date.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
