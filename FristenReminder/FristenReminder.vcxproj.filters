@@ -24,12 +24,18 @@
     <ClCompile Include="date.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="contractManager.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="contract.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="date.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="contractManager.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
