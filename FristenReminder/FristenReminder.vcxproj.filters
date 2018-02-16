@@ -38,5 +38,11 @@
     <ClInclude Include="contractManager.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="currency.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="currencyCode.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

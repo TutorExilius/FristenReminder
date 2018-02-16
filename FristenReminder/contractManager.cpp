@@ -27,7 +27,6 @@ ContractManager::ContractManager( const std::string &csvFile )
 {
 	std::ifstream inFile{ csvFile };
 	
-
 	if( !inFile )
 	{
 	//	Log{ "File could not opened" };
@@ -54,7 +53,7 @@ void ContractManager::parse( std::ifstream &inFile )
 	std::string partner;
 
 	std::string startDateStr;
-	Date startDate;
+	Date startDate{ 1, Date::Month::APR,1 };
 
 	std::string basicFeeStr;
 	float basicFee = 0.0f;
@@ -125,6 +124,8 @@ void ContractManager::parse( std::ifstream &inFile )
 				std::stringstream tmp;
 				tmp << idStr;
 				tmp >> id;
+
+				Date startDate{ startDateStr }; // "day.month.yearyear"
 
 				tmp << basicFeeStr;
 				tmp >> basicFee;

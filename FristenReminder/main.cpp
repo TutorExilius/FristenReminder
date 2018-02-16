@@ -5,17 +5,29 @@
 #include <vector>
 #include <array>
 #include <regex>
+#include <iostream>
 
+#include "date.h"
 #include "contractManager.h"
 
 int main( int argc, char *argv[] )
 {
 	try
 	{
-		std::setlocale( LC_ALL, "" );
-		ContractManager contractManager{ "../testdaten.csv" };
+		Currency eur = Currency::EUR;
+		Date d1{ "29.2.400" };
+
+
+
+		//ContractManager contractManager{ "../testdaten.csv" };
+
 	}
 	catch( const std::string &error )
+	{
+		std::cerr << "Exception: " << error << std::endl;
+		return -1;
+	}
+	catch( const char *error )
 	{
 		std::cerr << "Exception: " << error << std::endl;
 		return -1;
