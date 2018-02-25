@@ -5,6 +5,7 @@
 
 #include "date.h"
 #include "currency.h"
+#include "period.h"
 
 class Contract
 {
@@ -12,21 +13,24 @@ public:
 	explicit Contract( const size_t &id,
 					   const std::string &partner,
 					   const Date &startDate,
-					   const float &basicFee,
-					   const std::string &chargePeriod,
-					   const std::string &contractDuration,
-					   const std::string &cancellationPeriod,
+					   const Currency &basicFee,
+					   const Period &chargePeriod,
+					   const Period &contractDuration,
+					   const Period &cancellationPeriod,
 					   const std::string &contactDetails,
 					   const std::string &note = "" );
+
+	std::string toString() const;
+
 private:
 	const size_t id;
 	std::string partner;
 	Date startDate;
 	Currency basicFee;
-	std::string chargePeriod;		// Todo: as enum
-	std::string contractDuration;	// Todo: as Custom Type
-	std::string cancellationPeriod;	// Todo: as Custom Type
-	std::string contactDetails;		// Todo: as Custom Type
+	Period chargePeriod;		
+	Period contractDuration;	
+	Period cancellationPeriod;
+	std::string contactDetails;	 // Todo: as Custom Type?
 	std::string note;
 };
 

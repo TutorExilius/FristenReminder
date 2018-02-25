@@ -1,5 +1,6 @@
 #include "contractManager.h"
 
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -57,12 +58,19 @@ void ContractManager::parse( std::ifstream &inFile )
 
 	std::string basicFeeStr;
 	float basicFee = 0.0f;
+	std::string currencyCodeStr;
 
-	std::string chargePeriod;
+	std::string chargePeriodStr;
+	float chargePeriodFloat = 0.0f;
+	std::string chargePeriodUnitStr;
 
-	std::string contractDuration;
+	std::string contractDurationStr;
+	float contractDurationFloat = 0.0f;
+	std::string contractDurationUnitStr;
 
-	std::string cancellationPeriod;
+	std::string cancellationPeriodStr;
+	float cancellationPeriodFloat = 0.0f;
+	std::string  cancellationPeriodUnitStr;
 
 	std::string contactDetails;
 
@@ -94,14 +102,14 @@ void ContractManager::parse( std::ifstream &inFile )
 			std::getline( ss, basicFeeStr, ',' );
 			basicFeeStr = ContractManager::normalize( basicFeeStr );
 
-			std::getline( ss, chargePeriod, ',' );
-			chargePeriod = ContractManager::normalize( chargePeriod );
+			std::getline( ss, chargePeriodStr, ',' );
+			chargePeriodStr = ContractManager::normalize( chargePeriodStr );
 
-			std::getline( ss, contractDuration, ',' );
-			contractDuration = ContractManager::normalize( contractDuration );
+			std::getline( ss, contractDurationStr, ',' );
+			contractDurationStr = ContractManager::normalize( contractDurationStr );
 
-			std::getline( ss, cancellationPeriod, ',' );
-			cancellationPeriod = ContractManager::normalize( cancellationPeriod );
+			std::getline( ss, cancellationPeriodStr, ',' );
+			cancellationPeriodStr = ContractManager::normalize( cancellationPeriodStr );
 
 			std::getline( ss, contactDetails, ',' );
 			contactDetails = ContractManager::normalize( contactDetails );
@@ -109,32 +117,66 @@ void ContractManager::parse( std::ifstream &inFile )
 			std::getline( ss, note );
 			note = ContractManager::normalize( note );
 
+			/*
 			std::cout << idStr << std::endl;
 			std::cout << partner << std::endl;
 			std::cout << startDateStr << std::endl;
 			std::cout << basicFeeStr << std::endl;
-			std::cout << chargePeriod << std::endl;
-			std::cout << contractDuration << std::endl;
-			std::cout << cancellationPeriod << std::endl;
+			std::cout << chargePeriodStr << std::endl;
+			std::cout << contractDurationStr << std::endl;
+			std::cout << cancellationPeriodStr << std::endl;
 			std::cout << contactDetails << std::endl;
 			std::cout << note << std::endl;
+			*/
 
 			if( lineCounter > 1 )
 			{
 				std::stringstream tmp;
 				tmp << idStr;
 				tmp >> id;
+				tmp.clear();
+				tmp.sync();
 
 				Date startDate{ startDateStr }; // "day.month.yearyear"
 
 				tmp << basicFeeStr;
 				tmp >> basicFee;
+				tmp >> currencyCodeStr;
+				tmp.clear();
+				tmp.sync();
+
+				tmp << chargePeriodStr;
+				tmp >> chargePeriodFloat;
+				tmp >> chargePeriodUnitStr;
+				tmp.clear();
+				tmp.sync();
+
+				tmp << contractDurationStr;
+				tmp >> contractDurationFloat;
+				tmp >> contractDurationUnitStr;
+				tmp.clear();
+				tmp.sync();
+
+				tmp << cancellationPeriodStr;
+				tmp >> cancellationPeriodFloat;
+				tmp >> cancellationPeriodUnitStr;
+				tmp.clear();
+				tmp.sync();
+
+				std::transform( currencyCodeStr.begin(), currencyCodeStr.end(), currencyCodeStr.begin(),
+						[]( unsigned char c ){ return toupper( c ); } // correct
+				);
+
+				Currency currency{ basicFee, currencyCodeStr };
+				Period chargePeriod{ chargePeriodFloat, chargePeriodUnitStr };
+				Period contractDuration{ contractDurationFloat, contractDurationUnitStr };
+				Period cancellationPeriod{ cancellationPeriodFloat, cancellationPeriodUnitStr };
 
 				contracts.emplace_back( Contract{
 					id,
 					partner,
 					startDate,
-					basicFee,
+					currency,
 					chargePeriod,
 					contractDuration,
 					cancellationPeriod,
@@ -144,4 +186,16 @@ void ContractManager::parse( std::ifstream &inFile )
 			}
 		}
 	}
+}
+
+std::string ContractManager::toString() const
+{
+	std::stringstream out;
+
+	for( const auto &contract : this->contracts )
+	{
+		out << contract.toString() << endl;
+	}
+
+	return out.str();
 }

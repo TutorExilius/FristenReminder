@@ -14,13 +14,9 @@ int main( int argc, char *argv[] )
 {
 	try
 	{
-		Currency eur = Currency::EUR;
-		Date d1{ "29.2.400" };
+		ContractManager contractManager{ "../testdaten.csv" };
 
-
-
-		//ContractManager contractManager{ "../testdaten.csv" };
-
+		std::cout << contractManager.toString() << std::endl;
 	}
 	catch( const std::string &error )
 	{

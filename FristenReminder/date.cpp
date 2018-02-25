@@ -1,11 +1,10 @@
 #include "date.h"
 
 #include <sstream>
-using std::stringstream;
 
 Date Date::strToDate( const string &dateStr )
 {
-	stringstream ss;
+	std::stringstream ss;
 
 	ss << dateStr;
 
@@ -133,4 +132,13 @@ Date& Date::operator=( const Date& obj )
 
 Date::~Date()
 {
+}
+
+std::string Date::toString() const
+{
+	std::stringstream out;
+
+	out << this->day << '.' << Date::monthToInt(this->month) << '.' << this->year;
+
+	return out.str();
 }

@@ -26,6 +26,8 @@ public:
 	Date& operator=( const Date& obj );
 	~Date();
 
+	std::string toString() const;
+
 private:
 	Date() = delete;
 

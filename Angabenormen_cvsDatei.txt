@@ -12,23 +12,23 @@ Grund-Gebuehren:	- Ganzzahl oder Fließkomma, Fließkomma Dezimal-Punkt
 					- Angabe der Währung ausgeschrieben gemäß internationaler
 					Währungsnorm (EUR, YEN, USD, ... )(Währungskürzel im ISO 4217)
 						
-						z.B: € -> EUR, $ -> USD, ...
+					z.B: 	€ -> EUR, $ -> USD, ...
 					z.B:	3 EUR, 14.99 YEN
 	
 Gebuehrenzyklus:	- positive Ganzzahl oder positive Fließkomma, 
 					mit Angabe folgenden Einheiten: D=Days, M=Months,Y=Years
 					z.B: 12D, 12 D, 12d, 12 d, ... , 1.5y, 1.5 Y,
-					- bei Fehlen der Zahl wird Standard von 1 ausgegangen
+					
 					
 Laufzeit:			- positive Ganzzahl oder positive Fließkomma,
 					mit Angabe folgenden Einheiten: D=Days, M=Months,Y=Years
 					z.B: 12D, 12 D, 12d, 12 d, ... , 1.5y, 1.5 Y, 
-					- bei Fehlen der Zahl wird Standard von 1 ausgegangen
+					
 					
 K-Frist:			- positive Ganzzahl oder positive Fließkomma,
 					mit Angabe folgenden Einheiten: D=Days, M=Months,Y=Years
 					z.B: 12D, 12 D, 12d, 12 d, ... , 1.5y, 1.5 Y, 
-					- bei Fehlen der Zahl wird Standard von 1 ausgegangen
+					
 
 Bemerkungen:		- erlaubte Zeichen: 0-9, a-f, A-F,		zB:	Max Mustermann GmbH					
 					und weitere Sonderzeichen, siehe Ascii-Zeichensatz (0-255)

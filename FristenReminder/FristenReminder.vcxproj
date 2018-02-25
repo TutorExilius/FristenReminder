@@ -115,6 +115,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="contractManager.cpp" />
+    <ClCompile Include="currency.cpp" />
     <ClCompile Include="date.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="contract.cpp" />
@@ -125,6 +126,7 @@
     <ClInclude Include="currencyCode.h" />
     <ClInclude Include="currency.h" />
     <ClInclude Include="date.h" />
+    <ClInclude Include="period.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

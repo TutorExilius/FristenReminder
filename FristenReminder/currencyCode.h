@@ -3,6 +3,7 @@
 
 enum class CurrencyCode
 {
+	ERROR,
 	AED,
 	AFN,
 	ALL,
