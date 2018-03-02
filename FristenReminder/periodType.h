@@ -1,12 +1,14 @@
-#ifndef PERIOD_H
-#define PERIOD_H
+#ifndef PERIODTYPE_H
+#define PERIODTYPE_H
+
+#include "fieldValue.h"
 
 #include <string>
 #include <sstream>
 
 enum class TimeUnit{ ERROR, D, W, M, Y };
 
-struct Period
+struct PeriodType : public FieldValue
 {
 	static TimeUnit strToTimeUnit( const std::string &timeUnitStr )
 	{
@@ -36,22 +38,30 @@ struct Period
 		}
 	}
 
-	Period( const float &value, const TimeUnit &timeUnit )
-	: value{ value }
+	PeriodType( const std::string &fieldName,
+				const bool optional,
+				const float &value,
+				const TimeUnit &timeUnit )
+	: FieldValue{ fieldName, optional }
+	, value{ value }
 	, unit{ timeUnit }
 	{
 	}
 
-	Period( const float &value, const std::string &timeUnitStr )
-	: Period{ value, Period::strToTimeUnit( timeUnitStr ) }
+	PeriodType( const std::string &fieldName,
+				const bool optional, 
+				const float &value, 
+				const std::string &timeUnitStr )
+	: PeriodType{ fieldName, optional, 
+		value, PeriodType::strToTimeUnit( timeUnitStr ) }
 	{
 	}
 
-	std::string toString() const
+	std::string toString() const override
 	{
 		std::stringstream out;
 
-		out << this->value << ' ' << Period::timeUnitToString( this->unit );
+		out << this->value << ' ' << PeriodType::timeUnitToString( this->unit );
 
 		return out.str();
 	}
@@ -60,4 +70,4 @@ struct Period
 	TimeUnit unit;
 };
 
-#endif // PERIOD_Hscaling
+#endif // PERIODTYPE_H

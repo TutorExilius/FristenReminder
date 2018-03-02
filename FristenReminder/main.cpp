@@ -7,7 +7,7 @@
 #include <regex>
 #include <iostream>
 
-#include "date.h"
+#include "dateType.h"
 #include "contractManager.h"
 
 int main( int argc, char *argv[] )

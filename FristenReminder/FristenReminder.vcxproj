@@ -115,18 +115,24 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="contractManager.cpp" />
-    <ClCompile Include="currency.cpp" />
-    <ClCompile Include="date.cpp" />
+    <ClCompile Include="currencyType.cpp" />
+    <ClCompile Include="dateType.cpp" />
+    <ClCompile Include="fieldValue.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="contract.cpp" />
+    <ClCompile Include="parser.cpp" />
+    <ClCompile Include="stringType.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="contract.h" />
     <ClInclude Include="contractManager.h" />
     <ClInclude Include="currencyCode.h" />
-    <ClInclude Include="currency.h" />
-    <ClInclude Include="date.h" />
-    <ClInclude Include="period.h" />
+    <ClInclude Include="currencyType.h" />
+    <ClInclude Include="dateType.h" />
+    <ClInclude Include="fieldValue.h" />
+    <ClInclude Include="parser.h" />
+    <ClInclude Include="periodType.h" />
+    <ClInclude Include="stringType.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

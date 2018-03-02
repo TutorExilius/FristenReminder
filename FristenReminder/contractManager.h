@@ -1,11 +1,12 @@
 #ifndef CONTRACTMANAGER_H
 #define CONTRACTMANAGER_H
 
+#include "contract.h"
+#include "parser.h"
+#include "periodType.h"
+
 #include <string>
 #include <vector>
-
-#include "contract.h"
-#include "period.h"
 
 class ContractManager
 {
@@ -20,6 +21,7 @@ private:
 
 	const std::string csvFile;
 	std::vector<Contract> contracts;
+	Parser parser;
 };
 
 #endif

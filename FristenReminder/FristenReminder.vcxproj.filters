@@ -21,13 +21,22 @@
     <ClCompile Include="contract.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="date.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="contractManager.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="currency.cpp">
+    <ClCompile Include="parser.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="stringType.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="fieldValue.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="dateType.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="currencyType.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
@@ -35,19 +44,28 @@
     <ClInclude Include="contract.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="date.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="contractManager.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="currency.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="currencyCode.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="period.h">
+    <ClInclude Include="parser.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="fieldValue.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="stringType.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="dateType.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="periodType.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="currencyType.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

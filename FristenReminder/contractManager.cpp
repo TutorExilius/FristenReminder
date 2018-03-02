@@ -51,10 +51,10 @@ void ContractManager::parse( std::ifstream &inFile )
 	std::string idStr;
 	size_t id = 0;
 
-	std::string partner;
+	std::string name;
 
-	std::string startDateStr;
-	Date startDate{ 1, Date::Month::APR,1 };
+	std::string beginningStr;
+	Date beginning{ 1, Date::Month::APR,1 };
 
 	std::string basicFeeStr;
 	float basicFee = 0.0f;
@@ -64,9 +64,9 @@ void ContractManager::parse( std::ifstream &inFile )
 	float chargePeriodFloat = 0.0f;
 	std::string chargePeriodUnitStr;
 
-	std::string contractDurationStr;
-	float contractDurationFloat = 0.0f;
-	std::string contractDurationUnitStr;
+	std::string termStr;
+	float termFloat = 0.0f;
+	std::string termUnitStr;
 
 	std::string cancellationPeriodStr;
 	float cancellationPeriodFloat = 0.0f;
@@ -74,7 +74,7 @@ void ContractManager::parse( std::ifstream &inFile )
 
 	std::string contactDetails;
 
-	std::string note;
+	std::string comment;
 
 	size_t lineCounter = 0;
 
@@ -87,17 +87,19 @@ void ContractManager::parse( std::ifstream &inFile )
 
 		if( line.size() > 0 )
 		{
+			this->parser.parse( lineCounter, line );
+			/*
 			std::stringstream ss;
 			ss << line;
 
 			std::getline( ss, idStr, ',' );
 			idStr = ContractManager::normalize( idStr );
 
-			std::getline( ss, partner, ',' );
-			partner = ContractManager::normalize( partner );
+			std::getline( ss, name, ',' );
+			name = ContractManager::normalize( name );
 
-			std::getline( ss, startDateStr, ',' );
-			startDateStr = ContractManager::normalize( startDateStr );
+			std::getline( ss, beginningStr, ',' );
+			beginningStr = ContractManager::normalize( beginningStr );
 
 			std::getline( ss, basicFeeStr, ',' );
 			basicFeeStr = ContractManager::normalize( basicFeeStr );
@@ -105,8 +107,8 @@ void ContractManager::parse( std::ifstream &inFile )
 			std::getline( ss, chargePeriodStr, ',' );
 			chargePeriodStr = ContractManager::normalize( chargePeriodStr );
 
-			std::getline( ss, contractDurationStr, ',' );
-			contractDurationStr = ContractManager::normalize( contractDurationStr );
+			std::getline( ss, termStr, ',' );
+			termStr = ContractManager::normalize( termStr );
 
 			std::getline( ss, cancellationPeriodStr, ',' );
 			cancellationPeriodStr = ContractManager::normalize( cancellationPeriodStr );
@@ -114,20 +116,8 @@ void ContractManager::parse( std::ifstream &inFile )
 			std::getline( ss, contactDetails, ',' );
 			contactDetails = ContractManager::normalize( contactDetails );
 
-			std::getline( ss, note );
-			note = ContractManager::normalize( note );
-
-			/*
-			std::cout << idStr << std::endl;
-			std::cout << partner << std::endl;
-			std::cout << startDateStr << std::endl;
-			std::cout << basicFeeStr << std::endl;
-			std::cout << chargePeriodStr << std::endl;
-			std::cout << contractDurationStr << std::endl;
-			std::cout << cancellationPeriodStr << std::endl;
-			std::cout << contactDetails << std::endl;
-			std::cout << note << std::endl;
-			*/
+			std::getline( ss, comment );
+			comment = ContractManager::normalize( comment );
 
 			if( lineCounter > 1 )
 			{
@@ -137,7 +127,7 @@ void ContractManager::parse( std::ifstream &inFile )
 				tmp.clear();
 				tmp.sync();
 
-				Date startDate{ startDateStr }; // "day.month.yearyear"
+				Date startDate{ beginningStr }; // "day.month.yearyear"
 
 				tmp << basicFeeStr;
 				tmp >> basicFee;
@@ -151,9 +141,9 @@ void ContractManager::parse( std::ifstream &inFile )
 				tmp.clear();
 				tmp.sync();
 
-				tmp << contractDurationStr;
-				tmp >> contractDurationFloat;
-				tmp >> contractDurationUnitStr;
+				tmp << termStr;
+				tmp >> termFloat;
+				tmp >> termUnitStr;
 				tmp.clear();
 				tmp.sync();
 
@@ -169,21 +159,22 @@ void ContractManager::parse( std::ifstream &inFile )
 
 				Currency currency{ basicFee, currencyCodeStr };
 				Period chargePeriod{ chargePeriodFloat, chargePeriodUnitStr };
-				Period contractDuration{ contractDurationFloat, contractDurationUnitStr };
+				Period contractDuration{ termFloat, termUnitStr };
 				Period cancellationPeriod{ cancellationPeriodFloat, cancellationPeriodUnitStr };
 
 				contracts.emplace_back( Contract{
 					id,
-					partner,
+					name,
 					startDate,
 					currency,
 					chargePeriod,
 					contractDuration,
 					cancellationPeriod,
 					contactDetails,
-					note
+					comment
 				} );
 			}
+			*/
 		}
 	}
 }

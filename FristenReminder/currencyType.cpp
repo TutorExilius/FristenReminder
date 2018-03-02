@@ -1,20 +1,27 @@
-#include "currency.h"
+#include "currencyType.h"
 
 #include <iomanip>
 #include <sstream>
 
-Currency::Currency( const float &amount, const CurrencyCode &currencyCode )
-: amount{ amount }
+CurrencyType::CurrencyType( const std::string &fieldName, 
+							const bool optional,
+							const float &amount, 
+							const CurrencyCode &currencyCode )
+: FieldValue{ fieldName, optional }
+, amount{ amount }
 , currencyCode{ currencyCode }
 {
 }
 
-Currency::Currency( const float &amount, const std::string &currencyCodeStr )
-: Currency{ amount, Currency::strToCurrencyCode( currencyCodeStr ) }
+CurrencyType::CurrencyType( const std::string &fieldName, 
+							const bool optional,
+							const float &amount,
+							const std::string &currencyCodeStr )
+: CurrencyType{ fieldName, optional, amount, CurrencyType::strToCurrencyCode( currencyCodeStr ) }
 {
 }
 
-CurrencyCode Currency::strToCurrencyCode( const std::string &currencyCodeStr )
+CurrencyCode CurrencyType::strToCurrencyCode( const std::string &currencyCodeStr )
 {
     if( currencyCodeStr == "AED" ) return CurrencyCode::AED;
 	if( currencyCodeStr == "AFN" ) return CurrencyCode::AFN;
@@ -185,7 +192,7 @@ CurrencyCode Currency::strToCurrencyCode( const std::string &currencyCodeStr )
 		return CurrencyCode::ERROR;
 }
 
-std::string Currency::currencyCodeToStr( const CurrencyCode &CurrencyCode )
+std::string CurrencyType::currencyCodeToStr( const CurrencyCode &CurrencyCode )
 {
 	switch( CurrencyCode )
 	{
@@ -357,12 +364,12 @@ std::string Currency::currencyCodeToStr( const CurrencyCode &CurrencyCode )
 	}
 }
 
-std::string Currency::toString() const
+std::string CurrencyType::toString() const
 {
 	std::stringstream out;
 
 	out << std::fixed << std::setprecision( 3 ) << this->amount << ' '
-		<< Currency::currencyCodeToStr( this->currencyCode );
+		<< CurrencyType::currencyCodeToStr( this->currencyCode );
 
 	return out.str();
 }

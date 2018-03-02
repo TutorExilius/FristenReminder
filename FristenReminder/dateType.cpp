@@ -1,6 +1,17 @@
-#include "date.h"
+#include "dateType.h"
+
+#include "fieldValue.h"
 
 #include <sstream>
+
+Date::Date( const size_t day,
+			const Date::Month month,
+			const int year )
+: day{ day }
+, month{ month }
+, year{ year }
+{
+}
 
 Date Date::strToDate( const string &dateStr )
 {
@@ -99,39 +110,53 @@ bool Date::isValidDate( const Date &date )
 	return Date::isValidDate( date.day, date.month, date.year );
 }
 
-Date::Date( const size_t day, const Month month, const int year )
-: day{ day }
-, month{ month }
-, year{ year } 
+DateType::DateType( const std::string &fieldName,
+					const bool optional,
+					const Date &date )
+: FieldValue{ fieldName, optional }
+, date{ date }
 {
-	if( !Date::isValidDate( *this ) )
+	if( !Date::isValidDate( this->date ) )
 	{
 		throw "Invalid Date Format";
 	}
 }
 
-Date::Date( const string &dateStr )
+DateType::DateType( const std::string &fieldName, 
+					const bool optional,
+					const size_t day, 
+					const Date::Month month, 
+					const int year )
+: FieldValue{ fieldName, optional }
+, date{ day, month, year }
 {
-	*this = Date::strToDate( dateStr );
+	if( !Date::isValidDate( this->date ) )
+	{
+		throw "Invalid Date Format";
+	}
 }
 
-Date::Date( const Date& obj )
-: Date{ obj.day, obj.month, obj.year }
+DateType::DateType( const DateType& obj )
+: DateType{ obj.getFieldName(),
+			obj.isOptional(),
+			obj.date }
 {
 }
 
-Date& Date::operator=( const Date& obj )
+DateType& DateType::operator=( const DateType& obj )
 {
-	this->day = obj.day;
-	this->month = obj.month;
-	this->year = obj.year;
+	this->date = obj.date;
 
 	return *this;
 }
 
-
-Date::~Date()
+DateType::~DateType()
 {
+}
+
+std::string DateType::toString() const
+{
+	return this->date.toString();
 }
 
 std::string Date::toString() const

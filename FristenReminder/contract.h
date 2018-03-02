@@ -1,37 +1,38 @@
 #ifndef CONTRACT_H
 #define CONTRACT_H
 
-#include <string>
+#include "dateType.h"
+#include "currencyType.h"
+#include "periodtype.h"
+#include "stringType.h"
 
-#include "date.h"
-#include "currency.h"
-#include "period.h"
+#include <string>
 
 class Contract
 {
 public:
 	explicit Contract( const size_t &id,
-					   const std::string &partner,
-					   const Date &startDate,
-					   const Currency &basicFee,
-					   const Period &chargePeriod,
-					   const Period &contractDuration,
-					   const Period &cancellationPeriod,
-					   const std::string &contactDetails,
-					   const std::string &note = "" );
+					   const StringType &name,
+					   const DateType &beginning,
+					   const CurrencyType &basicFee,
+					   const PeriodType &chargePeriod,
+					   const PeriodType &term,
+					   const PeriodType &noticePeriod,
+					   const StringType &contactDetails,
+					   const StringType &comment );
 
 	std::string toString() const;
 
 private:
 	const size_t id;
-	std::string partner;
-	Date startDate;
-	Currency basicFee;
-	Period chargePeriod;		
-	Period contractDuration;	
-	Period cancellationPeriod;
-	std::string contactDetails;	 // Todo: as Custom Type?
-	std::string note;
+	StringType name;
+	DateType beginning;
+	CurrencyType basicFee;
+	PeriodType chargePeriod;
+	PeriodType term;
+	PeriodType noticePeriod;
+	StringType contactDetails;
+	StringType comment;
 };
 
 #endif // CONTRACT_H
