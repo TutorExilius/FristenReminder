@@ -6,21 +6,16 @@
 #include <iomanip>
 #include <sstream>
 
-CurrencyType::CurrencyType( const std::string &fieldName, 
-							const bool optional,
-							const float &amount, 
+CurrencyType::CurrencyType( const float &amount, 
 							const CurrencyCode &currencyCode )
-: FieldValue{ fieldName, optional }
-, amount{ amount }
+: amount{ amount }
 , currencyCode{ currencyCode }
 {
 }
 
-CurrencyType::CurrencyType( const std::string &fieldName, 
-							const bool optional,
-							const float &amount,
+CurrencyType::CurrencyType( const float &amount,
 							const std::string &currencyCodeStr )
-: CurrencyType{ fieldName, optional, amount, CurrencyType::strToCurrencyCode( currencyCodeStr ) }
+: CurrencyType{ amount, CurrencyType::strToCurrencyCode( currencyCodeStr ) }
 {
 }
 
@@ -377,28 +372,4 @@ std::string CurrencyType::toString() const
 		<< CurrencyType::currencyCodeToStr( this->currencyCode );
 
 	return out.str();
-}
-
-bool CurrencyType::take( std::string fieldValue )
-{
-	std::stringstream ss;
-	ss << fieldValue;
-
-	float chargePeriodFloat = 0.0f;
-	std::string chargePeriodUnitStr;
-
-	ss >> chargePeriodFloat;
-	ss >> chargePeriodUnitStr;
-
-	this->amount = chargePeriodFloat;
-	this->currencyCode = this->strToCurrencyCode( chargePeriodUnitStr );
-
-	if( this->currencyCode != CurrencyCode::ERROR )
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
 }

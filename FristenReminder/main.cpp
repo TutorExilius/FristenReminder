@@ -12,39 +12,12 @@
 
 int main( int argc, char *argv[] )
 {
-	try
-	{
-		setlocale( LC_ALL, "German" ); 
-		std::cin.imbue( std::locale( "german" ) );
-		std::cout.imbue( std::locale( "german" ) );
+	setlocale( LC_ALL, "de_DE.UTF-8" ); 
+	std::cin.imbue( std::locale( "de_DE.UTF-8" ) );
+	std::cout.imbue( std::locale( "de_DE.UTF-8" ) );
+	ContractManager contractManager{ "testdaten.csv" };
 
-		ContractManager contractManager{ "../testdaten.csv" };
-		contractManager.start();		
-	}
-	catch( const std::string &error )
-	{
-		std::cerr << "Exception: " << error << std::endl;
-		
-		Helper::pauseSreen();
-
-		return -1;
-	}
-	catch( const char *error )
-	{
-		std::cerr << "Exception: " << error << std::endl;
-
-		Helper::pauseSreen();
-
-		return -1;
-	}
-	catch( ... )
-	{
-		std::cerr << "Exception: " << "Unhandled Exception" << std::endl;
-
-		Helper::pauseSreen();
-
-		return -1;
-	}
+	contractManager.start();
 
 	return 0;
 }

@@ -1,25 +1,20 @@
 #ifndef DATETYPE_H
 #define DATETYPE_H
 
-#include "fieldValue.h"
-
-#include <iostream>
-using std::cout;
-using std::endl;
-
 #include <string>
+using std::size_t;
 using std::string;
 
 class Date
 {
-	friend class DateType;
+	friend class DateParser;
 
 public:
 	enum class Month { NONE, JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OKT, NOV, DEC };
 
-	Date( const size_t day,
-		  const Date::Month month,
-		  const int year );
+	Date( const size_t day = 1,
+		  const Date::Month month = Date::Month::JAN,
+		  const int year = 1900 );
 
 	static Date strToDate( const string &dateStr );
 	static size_t monthToInt( const Month enumMonth );
@@ -33,29 +28,6 @@ private:
 	size_t day;
 	Month month;
 	int year;
-};
-
-class DateType : public FieldValue
-{
-public:
-	explicit DateType( const std::string &fieldName,
-					   const bool optional,
-					   const size_t day = 1,
-					   const Date::Month month = Date::Month::JAN,
-					   const int year = 1900 );
-	explicit DateType( const std::string &fieldName, 
-					   const bool optional,
-					   const Date &date );
-
-	DateType( const DateType& obj );
-	DateType& operator=( const DateType& obj );
-	~DateType();
-
-	virtual std::string toString() const override;
-	virtual bool take( std::string fieldValue ) override;
-
-private:
-	Date date;
 };
 
 #endif // DATETYPE_H
