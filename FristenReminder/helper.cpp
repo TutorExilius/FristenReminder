@@ -8,8 +8,8 @@ namespace Helper
 	{
 		std::string tmp = value;
 
-		int fromPos = tmp.find_first_of( '"' );
-		int toPos = tmp.find_last_of( '"' );
+		size_t fromPos = tmp.find_first_of( '"' );
+		size_t toPos = tmp.find_last_of( '"' );
 
 		if( fromPos != std::string::npos &&
 			toPos != std::string::npos &&
@@ -31,5 +31,28 @@ namespace Helper
 		);
 
 		return strToUpper;
+	}
+
+	void clearScreen()
+	{
+		system( "CLS" );
+	}
+
+	void pauseSreen()
+	{
+		system( "PAUSE" );
+	}
+
+	std::string replace( std::string str, const char oldChar, const char newChar )
+	{
+		for( int i = 0; i < str.size(); i++ )
+		{
+			if( str[i] == oldChar )
+			{
+				str[i] = newChar;
+			}
+		}
+
+		return str;
 	}
 }

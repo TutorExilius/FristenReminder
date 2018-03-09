@@ -13,10 +13,18 @@ class ContractManager
 public:
 	explicit ContractManager( const std::string &csvFile );
 
-	std::string toString() const;
+	void start();
 
 private:
+	std::string toString() const;
 	void parse( std::ifstream &inFile );
+	void printMenu() const;
+	void handleMenuPoint( const int menuPoint );
+	std::string getFieldValue( const Contract &contract, const std::string &fieldValue ) const;
+
+	// Menu-Funcitons
+	void listAllEntries() const;
+	void save() const;
 
 	const std::string csvFile;
 	std::vector<Contract> contracts;

@@ -23,6 +23,16 @@ public:
 
 	std::string toString() const;
 
+	size_t getId() const;
+	StringType getName() const;
+	DateType getBeginning() const;
+	CurrencyType getBasicFee() const;
+	PeriodType getChargePeriod() const;
+	PeriodType getTerm() const;
+	PeriodType getNoticePeriod() const;
+	StringType getContactDetails() const;
+	StringType getComment() const;
+
 private:
 	const size_t id;
 	StringType name;

@@ -1,4 +1,3 @@
-#include <clocale>
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -9,29 +8,41 @@
 
 #include "dateType.h"
 #include "contractManager.h"
+#include "helper.h"
 
 int main( int argc, char *argv[] )
 {
 	try
 	{
-		ContractManager contractManager{ "../testdaten.csv" };
+		setlocale( LC_ALL, "German" ); 
+		std::cin.imbue( std::locale( "german" ) );
+		std::cout.imbue( std::locale( "german" ) );
 
-		std::cout << contractManager.toString() << std::endl;
-		std::cin.get();
+		ContractManager contractManager{ "../testdaten.csv" };
+		contractManager.start();		
 	}
 	catch( const std::string &error )
 	{
 		std::cerr << "Exception: " << error << std::endl;
+		
+		Helper::pauseSreen();
+
 		return -1;
 	}
 	catch( const char *error )
 	{
 		std::cerr << "Exception: " << error << std::endl;
+
+		Helper::pauseSreen();
+
 		return -1;
 	}
 	catch( ... )
 	{
 		std::cerr << "Exception: " << "Unhandled Exception" << std::endl;
+
+		Helper::pauseSreen();
+
 		return -1;
 	}
 

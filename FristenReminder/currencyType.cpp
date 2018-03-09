@@ -373,7 +373,7 @@ std::string CurrencyType::toString() const
 {
 	std::stringstream out;
 
-	out << std::fixed << std::setprecision( 3 ) << this->amount << ' '
+	out << std::fixed << std::setprecision( 2 ) << this->amount << ' '
 		<< CurrencyType::currencyCodeToStr( this->currencyCode );
 
 	return out.str();

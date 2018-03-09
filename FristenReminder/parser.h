@@ -17,6 +17,11 @@ public:
 
 	std::shared_ptr<Contract> parse( const int lineCounter, const std::string &line );
 
+	const std::vector<std::string>& getFieldOrder() const
+	{
+		return this->fieldOrder;
+	}
+
 private:
 	std::map<std::string, FieldValue*> knownFieldValues;
 	std::vector<std::string> fieldOrder;

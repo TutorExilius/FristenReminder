@@ -42,3 +42,48 @@ std::string Contract::toString() const
 
 	return out.str();
 }
+
+size_t Contract::getId() const
+{
+	return this->id;
+}
+
+StringType Contract::getName() const
+{
+	return this->name;
+}
+
+DateType Contract::getBeginning() const
+{
+	return this->beginning;
+}
+
+CurrencyType Contract::getBasicFee() const
+{
+	return this->basicFee;
+}
+
+PeriodType Contract::getChargePeriod() const
+{
+	return this->chargePeriod;
+}
+
+PeriodType Contract::getTerm() const
+{
+	return this->term;
+}
+
+PeriodType Contract::getNoticePeriod() const
+{
+	return this->noticePeriod;
+}
+
+StringType Contract::getContactDetails() const
+{
+	return this->contactDetails;
+}
+
+StringType Contract::getComment() const
+{
+	return this->comment;
+}
