@@ -17,6 +17,7 @@ int main( int argc, char *argv[] )
 		ContractManager contractManager{ "../testdaten.csv" };
 
 		std::cout << contractManager.toString() << std::endl;
+		std::cin.get();
 	}
 	catch( const std::string &error )
 	{

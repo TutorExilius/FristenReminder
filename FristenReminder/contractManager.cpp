@@ -1,27 +1,9 @@
 #include "contractManager.h"
 
-#include <algorithm>
 #include <fstream>
 #include <iostream>
+#include <memory>
 #include <sstream>
-
-std::string ContractManager::normalize( const std::string &value )
-{
-	std::string tmp = value;
-
-	int fromPos = tmp.find_first_of( '"' );
-	int toPos = tmp.find_last_of( '"' );
-
-	if( fromPos != std::string::npos &&
-		toPos != std::string::npos &&
-		fromPos < toPos )
-	{
-		int n = value.size() - ( value.size() - toPos ) - fromPos;
-		tmp = value.substr( fromPos + 1, n - 1 );
-	}
-
-	return tmp;
-}
 
 ContractManager::ContractManager( const std::string &csvFile )
 : csvFile{ csvFile }
@@ -48,34 +30,6 @@ ContractManager::ContractManager( const std::string &csvFile )
 
 void ContractManager::parse( std::ifstream &inFile )
 {
-	std::string idStr;
-	size_t id = 0;
-
-	std::string name;
-
-	std::string beginningStr;
-	Date beginning{ 1, Date::Month::APR,1 };
-
-	std::string basicFeeStr;
-	float basicFee = 0.0f;
-	std::string currencyCodeStr;
-
-	std::string chargePeriodStr;
-	float chargePeriodFloat = 0.0f;
-	std::string chargePeriodUnitStr;
-
-	std::string termStr;
-	float termFloat = 0.0f;
-	std::string termUnitStr;
-
-	std::string cancellationPeriodStr;
-	float cancellationPeriodFloat = 0.0f;
-	std::string  cancellationPeriodUnitStr;
-
-	std::string contactDetails;
-
-	std::string comment;
-
 	size_t lineCounter = 0;
 
 	std::string line;
@@ -87,7 +41,13 @@ void ContractManager::parse( std::ifstream &inFile )
 
 		if( line.size() > 0 )
 		{
-			this->parser.parse( lineCounter, line );
+			std::shared_ptr<Contract> contract = this->parser.parse( lineCounter, line );
+			
+			if( contract != nullptr )
+			{
+				this->contracts.emplace_back( *contract );
+			}
+
 			/*
 			std::stringstream ss;
 			ss << line;

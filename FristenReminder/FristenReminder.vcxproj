@@ -118,6 +118,7 @@
     <ClCompile Include="currencyType.cpp" />
     <ClCompile Include="dateType.cpp" />
     <ClCompile Include="fieldValue.cpp" />
+    <ClCompile Include="helper.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="contract.cpp" />
     <ClCompile Include="parser.cpp" />
@@ -130,6 +131,7 @@
     <ClInclude Include="currencyType.h" />
     <ClInclude Include="dateType.h" />
     <ClInclude Include="fieldValue.h" />
+    <ClInclude Include="helper.h" />
     <ClInclude Include="parser.h" />
     <ClInclude Include="periodType.h" />
     <ClInclude Include="stringType.h" />

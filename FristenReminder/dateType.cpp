@@ -110,6 +110,17 @@ bool Date::isValidDate( const Date &date )
 	return Date::isValidDate( date.day, date.month, date.year );
 }
 
+std::string Date::toString() const
+{
+	std::stringstream out;
+
+	out << this->day << '.' << Date::monthToInt( this->month ) << '.' << this->year;
+
+	return out.str();
+}
+
+
+
 DateType::DateType( const std::string &fieldName,
 					const bool optional,
 					const Date &date )
@@ -159,11 +170,17 @@ std::string DateType::toString() const
 	return this->date.toString();
 }
 
-std::string Date::toString() const
+bool DateType::take( std::string fieldValue )
 {
-	std::stringstream out;
+	Date date = Date::strToDate( fieldValue );
 
-	out << this->day << '.' << Date::monthToInt(this->month) << '.' << this->year;
-
-	return out.str();
+	if( date.isValidDate( date ) )
+	{
+		this->date = date;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }

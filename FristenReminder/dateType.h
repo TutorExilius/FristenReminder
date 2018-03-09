@@ -38,11 +38,11 @@ private:
 class DateType : public FieldValue
 {
 public:
-	explicit DateType( const std::string &fieldName, 
+	explicit DateType( const std::string &fieldName,
 					   const bool optional,
-					   const size_t day, 
-					   const Date::Month month, 
-					   const int year );
+					   const size_t day = 1,
+					   const Date::Month month = Date::Month::JAN,
+					   const int year = 1900 );
 	explicit DateType( const std::string &fieldName, 
 					   const bool optional,
 					   const Date &date );
@@ -51,11 +51,10 @@ public:
 	DateType& operator=( const DateType& obj );
 	~DateType();
 
-	std::string toString() const override;
+	virtual std::string toString() const override;
+	virtual bool take( std::string fieldValue ) override;
 
 private:
-	DateType() = delete;
-
 	Date date;
 };
 

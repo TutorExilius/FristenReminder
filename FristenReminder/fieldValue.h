@@ -10,6 +10,7 @@ public:
 	virtual ~FieldValue();
 
 	virtual std::string toString() const = 0;
+	virtual bool take( std::string fieldValue ) = 0;
 
 	std::string getFieldName() const
 	{

@@ -2,9 +2,12 @@
 #define PARSER_H
 
 #include <map>
+#include <memory>
 #include <string>
+#include <vector>
 
 // Forward-Declarations
+class Contract;
 class FieldValue;
 
 class Parser
@@ -12,11 +15,11 @@ class Parser
 public:
 	Parser();
 
-	bool parse( const int lineCounter, const std::string &line );
+	std::shared_ptr<Contract> parse( const int lineCounter, const std::string &line );
 
 private:
-	std::map<std::string, FieldValue*> fields;
-
+	std::map<std::string, FieldValue*> knownFieldValues;
+	std::vector<std::string> fieldOrder;
 };
 
 #endif // PARSER_H

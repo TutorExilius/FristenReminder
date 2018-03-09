@@ -40,8 +40,8 @@ struct PeriodType : public FieldValue
 
 	PeriodType( const std::string &fieldName,
 				const bool optional,
-				const float &value,
-				const TimeUnit &timeUnit )
+				const float &value = 0.0f,
+				const TimeUnit &timeUnit = TimeUnit::M )
 	: FieldValue{ fieldName, optional }
 	, value{ value }
 	, unit{ timeUnit }
@@ -57,13 +57,37 @@ struct PeriodType : public FieldValue
 	{
 	}
 
-	std::string toString() const override
+	virtual std::string toString() const override
 	{
 		std::stringstream out;
 
 		out << this->value << ' ' << PeriodType::timeUnitToString( this->unit );
 
 		return out.str();
+	}
+
+	virtual bool take( std::string fieldValue ) override
+	{
+		std::stringstream ss;
+		ss << fieldValue;
+
+		float chargePeriodFloat = 0.0f;
+		std::string chargePeriodUnitStr;
+
+		ss >> chargePeriodFloat;
+		ss >> chargePeriodUnitStr;
+
+		this->value = chargePeriodFloat;
+		this->unit = this->strToTimeUnit( chargePeriodUnitStr );
+
+		if( this->unit != TimeUnit::ERROR )
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	float value;

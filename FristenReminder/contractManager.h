@@ -11,7 +11,6 @@
 class ContractManager
 {
 public:
-	static std::string normalize( const std::string &value );
 	explicit ContractManager( const std::string &csvFile );
 
 	std::string toString() const;
