@@ -3,14 +3,13 @@
 #include "helper.h"
 #include "currencyType.h"
 #include "dateType.h"
-#include "helper.h"
 #include "periodType.h"
-#include "stringType.h"
 
 #include <fstream>
 #include <iostream>
 #include <memory>
 #include <sstream>
+using std::endl;
 
 ContractManager::ContractManager( const std::string &csvFile )
 : csvFile{ csvFile }
@@ -129,21 +128,6 @@ void ContractManager::save() const
 		throw "Coult not open *" + this->csvFile + "' to save.";
 	}
 
-	std::vector<std::pair<std::string, std::vector<std::string>>> keyValues;
-
-	for( const auto &fieldName : this->parser.getFieldOrder() )
-	{
-		auto keyValPair = std::make_pair( fieldName, std::vector<string>() );
-
-		for( const auto &contract : this->contracts )
-		{
-			const std::string fieldValue = this->getFieldValue( contract, fieldName );
-			keyValPair.second.emplace_back( fieldValue );
-		}
-
-		keyValues.emplace_back( keyValPair );
-	}
-
 	// Fieldnames
 	// Contract-Values
 	for( int i = 0; i < this->parser.getFieldOrder().size(); i++ )
@@ -156,68 +140,11 @@ void ContractManager::save() const
 		}
 	}
 
-	if( keyValues.size() > 0 )
+	for( auto& contract : this->contracts )
 	{
-		// Contract-Values
-		for( int i = 0; i < keyValues.at(0).second.size(); i++ )
-		{
-			outFile << std::endl;
-
-			int valueCount = 0;
-
-			for( const auto &keyVal : keyValues )
-			{
-				++valueCount;
-
-				outFile << '"' << keyVal.second.at( i ) << '"';
-
-				if( valueCount < this->parser.getFieldOrder().size() )
-				{
-					outFile << ',';
-				}
-			}
-		}
+		outFile << '\n' << this->parser.print(contract);
 	}
 
+	outFile.flush();
 	outFile.close();
-}
-
-std::string ContractManager::getFieldValue( const Contract &contract, const std::string &fieldValue ) const
-{
-	if( fieldValue == "name" )
-	{
-		return contract.getName().toString();
-	}
-	else if( fieldValue == "beginning" )
-	{
-		return contract.getBeginning().toString();
-	}
-	else if( fieldValue == "basicFee" )
-	{
-		return contract.getBasicFee().toString();
-	}
-	else if( fieldValue == "chargePeriod" )
-	{
-		return contract.getChargePeriod().toString();
-	}
-	else if( fieldValue == "term" )
-	{
-		return contract.getTerm().toString();
-	}
-	else if( fieldValue == "noticePeriod" )
-	{
-		return contract.getNoticePeriod().toString();
-	}
-	else if( fieldValue == "comment" )
-	{
-		return contract.getComment().toString();
-	}
-	else if( fieldValue == "contactDetails" )
-	{
-		return contract.getContactDetails().toString();
-	}
-	else
-	{
-		return "ERROR";
-	}
 }

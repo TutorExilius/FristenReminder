@@ -1,14 +1,12 @@
 #ifndef PERIODTYPE_H
 #define PERIODTYPE_H
 
-#include "fieldValue.h"
-
 #include <string>
 #include <sstream>
 
 enum class TimeUnit{ ERROR, D, W, M, Y };
 
-struct PeriodType : public FieldValue
+struct Period
 {
 	static TimeUnit strToTimeUnit( const std::string &timeUnitStr )
 	{
@@ -38,56 +36,26 @@ struct PeriodType : public FieldValue
 		}
 	}
 
-	PeriodType( const std::string &fieldName,
-				const bool optional,
-				const float &value = 0.0f,
+	Period( const float &value = 0.0f,
 				const TimeUnit &timeUnit = TimeUnit::M )
-	: FieldValue{ fieldName, optional }
-	, value{ value }
+	: value{ value }
 	, unit{ timeUnit }
 	{
 	}
 
-	PeriodType( const std::string &fieldName,
-				const bool optional, 
-				const float &value, 
+	Period( const float &value, 
 				const std::string &timeUnitStr )
-	: PeriodType{ fieldName, optional, 
-		value, PeriodType::strToTimeUnit( timeUnitStr ) }
+	: Period{ value, Period::strToTimeUnit( timeUnitStr ) }
 	{
 	}
 
-	virtual std::string toString() const override
+	std::string toString() const
 	{
 		std::stringstream out;
 
-		out << this->value << ' ' << PeriodType::timeUnitToString( this->unit );
+		out << this->value << ' ' << Period::timeUnitToString( this->unit );
 
 		return out.str();
-	}
-
-	virtual bool take( std::string fieldValue ) override
-	{
-		std::stringstream ss;
-		ss << fieldValue;
-
-		float chargePeriodFloat = 0.0f;
-		std::string chargePeriodUnitStr;
-
-		ss >> chargePeriodFloat;
-		ss >> chargePeriodUnitStr;
-
-		this->value = chargePeriodFloat;
-		this->unit = this->strToTimeUnit( chargePeriodUnitStr );
-
-		if( this->unit != TimeUnit::ERROR )
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
 	}
 
 	float value;

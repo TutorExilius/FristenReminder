@@ -20,7 +20,6 @@ private:
 	void parse( std::ifstream &inFile );
 	void printMenu() const;
 	void handleMenuPoint( const int menuPoint );
-	std::string getFieldValue( const Contract &contract, const std::string &fieldValue ) const;
 
 	// Menu-Funcitons
 	void listAllEntries() const;

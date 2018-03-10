@@ -2,25 +2,39 @@
 
 #include "contract.h"
 
-#include "currencyType.h"
-#include "dateType.h"
+#include "fieldParser.h"
+#include "stringParser.h"
+#include "currencyParser.h"
+#include "dateParser.h"
+#include "periodParser.h"
 #include "helper.h"
-#include "periodType.h"
-#include "stringType.h"
 
 #include <iostream>
 #include <sstream>
+#include <memory>
+
+namespace {
+
+	ReflectableField<Contract, std::string> NAME = {"name", &Contract::getName};
+	ReflectableField<Contract, Date> BEGINNING = {"beginning", &Contract::getBeginning};
+	ReflectableField<Contract, CurrencyType> BASICFEE = {"basicFee", &Contract::getBasicFee};
+	ReflectableField<Contract, Period> CHARGEPERIOD = {"chargePeriod", &Contract::getChargePeriod};
+	ReflectableField<Contract, Period> TERM = {"term", &Contract::getTerm};
+	ReflectableField<Contract, Period> NOTICEPERIOD = {"noticePeriod", &Contract::getNoticePeriod};
+	ReflectableField<Contract, std::string> COMMENT = {"comment", &Contract::getComment};
+	ReflectableField<Contract, std::string> CONTACTDETAILS = {"contactDetails", &Contract::getContactDetails};
+}
 
 Parser::Parser()
 {
-	this->knownFieldValues["name"] = new StringType{ "name", false };
-	this->knownFieldValues["beginning"] = new DateType{ "beginning", false };
-	this->knownFieldValues["basicFee"] = new CurrencyType{ "basicFee", false };
-	this->knownFieldValues["chargePeriod"] = new PeriodType{ "chargePeriod", false };
-	this->knownFieldValues["term"] = new PeriodType{ "term", false };
-	this->knownFieldValues["noticePeriod"] = new PeriodType{ "noticePeriod", false };
-	this->knownFieldValues["comment"] = new StringType{ "comment", true };
-	this->knownFieldValues["contactDetails"] = new StringType{ "contactDetails", true };
+	this->knownFieldValues.put(NAME, std::make_shared<StringParser>(false));;
+	this->knownFieldValues.put(BEGINNING, std::make_shared<DateParser>(false));
+	this->knownFieldValues.put(BASICFEE,  std::make_shared<CurrencyParser>(false));
+	this->knownFieldValues.put(CHARGEPERIOD, std::make_shared<PeriodParser>(false));
+	this->knownFieldValues.put(NOTICEPERIOD, std::make_shared<PeriodParser>(false));
+	this->knownFieldValues.put(TERM,  std::make_shared<PeriodParser>(false));
+	this->knownFieldValues.put(COMMENT, std::make_shared<StringParser>(true));
+	this->knownFieldValues.put(CONTACTDETAILS, std::make_shared<StringParser>(true));
 }
 
 std::shared_ptr<Contract> Parser::parse( const int lineCounter, const std::string &line )
@@ -56,11 +70,8 @@ std::shared_ptr<Contract> Parser::parse( const int lineCounter, const std::strin
 
 				const std::string fieldName = this->fieldOrder[valueNumber - 1];
 
-				if( this->knownFieldValues.find( fieldName ) == this->knownFieldValues.end() )
-				{
-					return nullptr;
-				}
-				else if( !this->knownFieldValues[fieldName]->take( field ) )
+				if( this->knownFieldValues.find( fieldName ) == nullptr
+					|| !this->knownFieldValues.find( fieldName )->take( field ) )
 				{
 					return nullptr;
 				}
@@ -72,14 +83,14 @@ std::shared_ptr<Contract> Parser::parse( const int lineCounter, const std::strin
 			contract = std::make_shared<Contract>(
 				Contract{ 
 						   static_cast<size_t>( lineCounter - 1 ),
-						   *( dynamic_cast<StringType*>(this->knownFieldValues["name"])),
-						   *( dynamic_cast<DateType*>(this->knownFieldValues["beginning"]) ),
-						   *( dynamic_cast<CurrencyType*>(this->knownFieldValues["basicFee"]) ),
-						   *( dynamic_cast<PeriodType*>(this->knownFieldValues["chargePeriod"]) ),
-						   *( dynamic_cast<PeriodType*>(this->knownFieldValues["term"]) ),
-						   *( dynamic_cast<PeriodType*>(this->knownFieldValues["noticePeriod"]) ),
-						   *( dynamic_cast<StringType*>(this->knownFieldValues["contactDetails"]) ),
-						   *( dynamic_cast<StringType*>(this->knownFieldValues["comment"]) ) 
+						   this->knownFieldValues[NAME],
+						   this->knownFieldValues[BEGINNING],
+						   this->knownFieldValues[BASICFEE],
+						   this->knownFieldValues[CHARGEPERIOD],
+						   this->knownFieldValues[TERM],
+						   this->knownFieldValues[NOTICEPERIOD],
+						   this->knownFieldValues[CONTACTDETAILS],
+						   this->knownFieldValues[COMMENT]
 				}
 			);
 		}
@@ -111,4 +122,47 @@ std::shared_ptr<Contract> Parser::parse( const int lineCounter, const std::strin
 	}
 
 	return contract;
+}
+
+std::string Parser::print( const Contract& contract ) const
+{
+	std::stringstream ss;
+	auto it = this->getFieldOrder().begin();
+	auto end = this->getFieldOrder().end();
+	while(it != end)
+	{
+		const std::string& fieldName = *it;
+		
+		if(fieldName == NAME.getFieldID()) {
+			ss << '"' << NAME.getFieldValue(contract) << '"';
+		}
+		else if(fieldName == BEGINNING.getFieldID()) {
+			ss << '"' << BEGINNING.getFieldValue(contract).toString() << '"';
+		}
+		else if(fieldName == BASICFEE.getFieldID()) {
+			ss << '"' << BASICFEE.getFieldValue(contract).toString() << '"';
+		}
+		else if(fieldName == CHARGEPERIOD.getFieldID()) {
+			ss << '"' << CHARGEPERIOD.getFieldValue(contract).toString() << '"';
+		}
+		else if(fieldName == TERM.getFieldID()) {
+			ss << '"' << TERM.getFieldValue(contract).toString() << '"';
+		}
+		else if(fieldName == NOTICEPERIOD.getFieldID()) {
+			ss << '"' << NOTICEPERIOD.getFieldValue(contract).toString() << '"';
+		}
+		else if(fieldName == COMMENT.getFieldID()) {
+			ss << '"' << COMMENT.getFieldValue(contract) << '"';
+		}
+		else if(fieldName == CONTACTDETAILS.getFieldID()) {
+			ss << '"' << CONTACTDETAILS.getFieldValue(contract) << '"';
+		}
+
+		++it;
+		if(it != end) {
+			ss << ',';
+		}
+	}
+
+	return ss.str();
 }

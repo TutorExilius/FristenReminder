@@ -1,10 +1,10 @@
 #ifndef PARSER_H
 #define PARSER_H
 
-#include <map>
 #include <memory>
 #include <string>
 #include <vector>
+#include "fieldDict.h"
 
 // Forward-Declarations
 class Contract;
@@ -16,6 +16,7 @@ public:
 	Parser();
 
 	std::shared_ptr<Contract> parse( const int lineCounter, const std::string &line );
+	std::string print( const Contract& contract ) const;
 
 	const std::vector<std::string>& getFieldOrder() const
 	{
@@ -23,7 +24,7 @@ public:
 	}
 
 private:
-	std::map<std::string, FieldValue*> knownFieldValues;
+	FieldDict knownFieldValues;
 	std::vector<std::string> fieldOrder;
 };
 
