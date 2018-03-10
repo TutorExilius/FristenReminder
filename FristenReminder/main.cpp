@@ -15,7 +15,7 @@ int main( int argc, char *argv[] )
 	setlocale( LC_ALL, "de_DE.UTF-8" ); 
 	std::cin.imbue( std::locale( "de_DE.UTF-8" ) );
 	std::cout.imbue( std::locale( "de_DE.UTF-8" ) );
-	ContractManager contractManager{ "testdaten.csv" };
+	ContractManager contractManager{ "../testdaten.csv" };
 
 	contractManager.start();
 

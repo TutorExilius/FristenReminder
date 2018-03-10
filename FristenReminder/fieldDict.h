@@ -32,7 +32,7 @@ private:
 template<typename U, typename T>
 class ReflectableField : public Field<T> {
     using FieldAccessor = std::function<const T&(const U&)>;
-    using ConstMemAccessor = const U&(U::*)();
+    using ConstMemAccessor = const T&(U::*)();
 public:
     ReflectableField(FieldId fieldID, FieldAccessor accessor)
     : Field<T>( fieldID )
