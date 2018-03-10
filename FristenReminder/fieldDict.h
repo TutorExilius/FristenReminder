@@ -26,7 +26,6 @@ public:
         return fieldID;
     }
 private:
-    // Not the name
     FieldId fieldID;
 };
 
