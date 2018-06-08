@@ -19,7 +19,9 @@ int main( int argc, char *argv[] )
 		std::cout.imbue( std::locale( "german" ) );
 
 		ContractManager contractManager{ "../testdaten.csv" };
-		contractManager.start();		
+		contractManager.start();
+
+		Helper::pauseSreen();
 	}
 	catch( const std::string &error )
 	{

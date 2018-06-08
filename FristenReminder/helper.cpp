@@ -1,9 +1,16 @@
 #include "helper.h"
 
 #include <algorithm>
+#include <iostream>
+#include <sstream>
+#include <string>
 
 namespace Helper
 {
+	/*
+	 *
+	 *
+	 */
 	std::string normalize( const std::string &value )
 	{
 		std::string tmp = value;
@@ -54,5 +61,43 @@ namespace Helper
 		}
 
 		return str;
+	}
+
+	std::vector<std::string> splitStringToVector( const std::string &line, const char seperator )
+	{
+		std::vector<std::string> splitted;
+
+		std::stringstream ss;
+		ss << line;
+
+		std::string splittedString;
+
+		while( std::getline( ss, splittedString, seperator ) )
+		{
+			splitted.push_back( splittedString );
+		}
+
+		return splitted;
+	}
+
+	std::string trim( const std::string &value )
+	{
+		std::string copy = value;
+		
+		// trimBegin
+		int pos = copy.find_first_not_of( " \t\n\v\f\r" );
+		if( pos > 0 )
+		{
+			copy = copy.erase( 0, pos );
+		}
+
+		// trimEnd
+		pos = copy.find_last_not_of( " \t\n\v\f\r" );
+		if( pos != std::string::npos )
+		{
+			copy = copy.erase( pos + 1 );
+		}
+	
+		return copy;
 	}
 }

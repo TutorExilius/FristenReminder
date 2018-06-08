@@ -5,20 +5,22 @@
 
 Contract::Contract( const size_t &id,
 					const StringType &name,
-					const DateType &startDate,
+					const DateType &beginning,
 					const CurrencyType &basicFee,
 					const PeriodType &chargePeriod,
-					const PeriodType &contractDuration,
-					const PeriodType &cancellationPeriod,
+					const PeriodType &initialTerm,
+					const PeriodType &renewalTerm,
+					const PeriodType &noticePeriod,
 					const StringType &contactDetails,
 					const StringType &comment )
 : id{ id }
 , name{ name }
-, beginning{ startDate }
+, beginning{ beginning }
 , basicFee{ basicFee }
 , chargePeriod{ chargePeriod }
-, term{ contractDuration }
-, noticePeriod{ cancellationPeriod }
+, initialTerm{ initialTerm }
+, renewalTerm{ renewalTerm }
+, noticePeriod{ noticePeriod }
 , contactDetails{ contactDetails }
 , comment{ comment }
 {
@@ -35,8 +37,9 @@ std::string Contract::toString() const
 	out << std::left << std::setw( width ) << "Start:"  << this->beginning.toString() << '\n';
 	out << std::left << std::setw( width ) << "Basic-Fee:" << this->basicFee.toString() << '\n';
 	out << std::left << std::setw( width ) << "Charge-Period:"<< this->chargePeriod.toString() << '\n';
-	out << std::left << std::setw( width ) << "Durataion:" << this->term.toString() << '\n';
-	out << std::left << std::setw( width ) << "Cancellation-Period:"  << this->noticePeriod.toString() << '\n';
+	out << std::left << std::setw( width ) << "Initial-Term:" << this->initialTerm.toString() << '\n';
+	out << std::left << std::setw( width ) << "Renewal-Term:" << this->renewalTerm.toString() << '\n';
+	out << std::left << std::setw( width ) << "Notice-Period:"  << this->noticePeriod.toString() << '\n';
 	out << std::left << std::setw( width ) << "Contract-Details:" << this->contactDetails.toString() << '\n';
 	out << std::left << std::setw( width ) << "Note:" << this->comment.toString() << '\n';
 
@@ -68,9 +71,14 @@ PeriodType Contract::getChargePeriod() const
 	return this->chargePeriod;
 }
 
-PeriodType Contract::getTerm() const
+PeriodType Contract::getInitialTerm() const
 {
-	return this->term;
+	return this->initialTerm;
+}
+
+PeriodType Contract::getRenewalTerm() const
+{
+	return this->renewalTerm;
 }
 
 PeriodType Contract::getNoticePeriod() const

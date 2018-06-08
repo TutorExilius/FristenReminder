@@ -1,3 +1,5 @@
-"comment","name","beginning","basicFee","chargePeriod","term","noticePeriod","contactDetails"
-"","Fitness XXZ","1.4.2017","8.00 EUR","1 W","24 M","4 W",""
-"Test","Mobil WeitWeitWeg","1.4.2017","20.00 EUR","1 M","24 M","4 W",""
+"comment","name","beginning","basicFee","chargePeriod","initialTerm","renewalTerm","noticePeriod","contactDetails"
+"Test","Mobil","1.4.2017","20.00 eur","1 M","24 M","12 M","4 W",""
+"Fitness XXZ","Mobil WeitWeitWeg","1.4.2017","20.00 EUR","1 M","24 M","12 M","4 W",""
+"1.4.2017","Mobil WeitWeitWeg","1.4.2017","20.00 EUR","1 M","24 M","12 M","4 W",""
+"8.00 EUR","Mobil WeitWeitWeg","1.4.2017","20.00 EUR","1 M","24 M","12 M","4 W",""

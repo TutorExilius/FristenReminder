@@ -43,6 +43,7 @@ public:
 					   const size_t day = 1,
 					   const Date::Month month = Date::Month::JAN,
 					   const int year = 1900 );
+
 	explicit DateType( const std::string &fieldName, 
 					   const bool optional,
 					   const Date &date );

@@ -16,6 +16,7 @@ public:
 	void start();
 
 private:
+	void handleError(const std::string &errorMessage);
 	std::string toString() const;
 	void parse( std::ifstream &inFile );
 	void printMenu() const;
@@ -26,9 +27,11 @@ private:
 	void listAllEntries() const;
 	void save() const;
 
+	bool error;
 	const std::string csvFile;
 	std::vector<Contract> contracts;
 	Parser parser;
+	std::vector<std::string> errorMessages;
 };
 
 #endif

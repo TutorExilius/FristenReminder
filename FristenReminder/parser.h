@@ -23,8 +23,10 @@ public:
 	}
 
 private:
+	bool hasValidDataStructures( const std::vector<std::string> &values ) const;
+
 	std::map<std::string, FieldValue*> knownFieldValues;
 	std::vector<std::string> fieldOrder;
 };
 
-#endif // PARSER_H
+#endif

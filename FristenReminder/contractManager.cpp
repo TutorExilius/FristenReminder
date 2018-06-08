@@ -13,23 +13,31 @@
 #include <sstream>
 
 ContractManager::ContractManager( const std::string &csvFile )
-: csvFile{ csvFile }
+: error{ false }
+, csvFile{ csvFile }
 {
 	std::ifstream inFile{ this->csvFile };
 	
 	if( !inFile )
 	{
-	//	Log{ "File could not opened" };
-		throw std::string{ "Could not open File: " + this->csvFile };
+		this->handleError("Could not open File: " + this->csvFile);
 	}
 
 	try
 	{
 		this->parse( inFile );
 	}
+	catch( const char *error )
+	{
+		this->handleError( error );
+	}
+	catch (const std::string error)
+	{
+		this->handleError( error );
+	}
 	catch( ... )
 	{
-		std::cerr << "Error while parsing" << std::endl;
+		this->handleError( "Error while parsing." );
 	}
 
 	inFile.close();
@@ -58,6 +66,12 @@ void ContractManager::parse( std::ifstream &inFile )
 	}
 }
 
+void ContractManager::handleError(const std::string &errorMessage)
+{
+	this->errorMessages.emplace_back( errorMessage );
+	this->error = true;
+}
+
 std::string ContractManager::toString() const
 {
 	std::stringstream out;
@@ -72,24 +86,38 @@ std::string ContractManager::toString() const
 
 void ContractManager::start()
 {
-	int menuePoint = 0;
+	if (!this->error)
+	{
+		int menuePoint = 0;
 
-	do
+		do
+		{
+			Helper::clearScreen();
+
+			this->printMenu();
+
+			std::cout << "\nYour choice: ";
+			std::cin >> menuePoint;
+
+			std::cout << std::endl;
+
+			this->handleMenuPoint(menuePoint);
+
+			Helper::pauseSreen();
+
+		} while (menuePoint != 0);
+	}
+	else
 	{
 		Helper::clearScreen();
 
-		this->printMenu();
+		std::cerr << "Start failed. Errors found:" << std::endl;
 
-		std::cout << "\nYour choice: ";
-		std::cin >> menuePoint;
-
-		std::cout << std::endl;
-
-		this->handleMenuPoint( menuePoint );
-
-		Helper::pauseSreen();
-
-	} while( menuePoint != 0 );
+		for( const auto &error : this->errorMessages )
+		{
+			std::cerr << "\t" << error << std::endl;
+		}
+	}
 }
 
 void ContractManager::printMenu() const
@@ -126,7 +154,8 @@ void ContractManager::save() const
 
 	if( !outFile )
 	{
-		throw "Coult not open *" + this->csvFile + "' to save.";
+		const_cast<ContractManager*>(this)->handleError( "Coult not open *" + csvFile + "' to save." );
+		return;
 	}
 
 	std::vector<std::pair<std::string, std::vector<std::string>>> keyValues;
@@ -200,9 +229,9 @@ std::string ContractManager::getFieldValue( const Contract &contract, const std:
 	{
 		return contract.getChargePeriod().toString();
 	}
-	else if( fieldValue == "term" )
+	else if( fieldValue == "initerm" )
 	{
-		return contract.getTerm().toString();
+		return contract.getInitialTerm().toString();
 	}
 	else if( fieldValue == "noticePeriod" )
 	{
